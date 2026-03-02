@@ -143,14 +143,16 @@ export default function GalleryPage() {
           Log out
         </button>
       </div>
-      <div className="w-full max-w-4xl">
-        <div className="rounded-lg border border-gray-200 bg-white p-4">
+      <div className="w-full max-w-2xl">
+        <div className="flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
           <img
             src={image.url}
             alt=""
-            className="mb-4 h-64 w-full rounded-md object-cover"
+            className="mb-6 h-80 w-full rounded-xl object-cover"
           />
-          <p className="mb-3 text-sm text-gray-900">{caption.content}</p>
+          <p className="mb-4 text-center text-lg font-semibold text-gray-900">
+            {caption.content}
+          </p>
           <CaptionVoteControls captionId={caption.id} />
         </div>
       </div>

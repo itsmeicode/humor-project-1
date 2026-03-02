@@ -54,27 +54,27 @@ export function CaptionVoteControls({ captionId }: CaptionVoteControlsProps) {
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <button
-        type="button"
-        disabled={isSubmitting}
-        onClick={() => handleVote(1)}
-        className="rounded-md border border-gray-300 px-2 py-1 text-xs hover:bg-gray-50 disabled:opacity-60"
-      >
-        👍
-      </button>
+    <div className="flex items-center gap-3">
       <button
         type="button"
         disabled={isSubmitting}
         onClick={() => handleVote(-1)}
-        className="rounded-md border border-gray-300 px-2 py-1 text-xs hover:bg-gray-50 disabled:opacity-60"
+        className="rounded-full border border-gray-300 px-4 py-2 text-base hover:bg-gray-50 disabled:opacity-60"
       >
         👎
       </button>
+      <button
+        type="button"
+        disabled={isSubmitting}
+        onClick={() => handleVote(1)}
+        className="rounded-full border border-gray-300 px-4 py-2 text-base hover:bg-gray-50 disabled:opacity-60"
+      >
+        👍
+      </button>
       {hasVoted && !error && (
-        <span className="text-xs text-gray-600">Thanks for voting!</span>
+        <span className="text-sm text-gray-600">Thanks for voting!</span>
       )}
-      {error && <span className="text-xs text-red-600">{error}</span>}
+      {error && <span className="text-sm text-red-600">{error}</span>}
     </div>
   );
 }
