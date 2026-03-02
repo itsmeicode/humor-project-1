@@ -3,23 +3,15 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getBrowserSupabaseClient } from '@/lib/supabaseBrowser';
-import { CaptionVoteControls } from './CaptionVoteControls';
 
 type ImageRow = {
   id: string | number;
   url: string;
 };
 
-type Caption = {
-  id: string | number;
-  content: string;
-  image_id: string | number;
-};
-
 export default function GalleryPage() {
   const router = useRouter();
-  const [image, setImage] = useState<ImageRow | null>(null);
-  const [caption, setCaption] = useState<Caption | null>(null);
+  const [images, setImages] = useState<ImageRow[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authChecked, setAuthChecked] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,48 +30,14 @@ export default function GalleryPage() {
 
         setAuthChecked(true);
 
-        const {
-          data: captionData,
-          error: captionError,
-        } = await supabase
-          .from('captions')
-          .select('id, content, image_id')
-          .eq('is_public', true)
-          .order('created_datetime_utc', { ascending: false })
-          .limit(1)
-          .maybeSingle();
-
-        if (captionError) {
-          setError(captionError.message);
-          return;
-        }
-
-        if (!captionData) {
-          setError('No captions found.');
-          return;
-        }
-
-        setCaption({
-          id: captionData.id,
-          content: captionData.content,
-          image_id: captionData.image_id,
-        });
-
-        const {
-          data: imageData,
-          error: imagesError,
-        } = await supabase
+        const { data, error: imagesError } = await supabase
           .from('images')
-          .select('id, url')
-          .eq('id', captionData.image_id)
-          .maybeSingle();
+          .select('id, url');
 
         if (imagesError) {
           setError(imagesError.message);
-        } else if (!imageData) {
-          setError('No image found for this caption.');
         } else {
-          setImage(imageData);
+          setImages(data ?? []);
         }
       } catch (err) {
         console.error(err);
@@ -122,18 +80,18 @@ export default function GalleryPage() {
     );
   }
 
-  if (!image || !caption) {
+  if (!images || images.length === 0) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center p-8">
         <h1 className="mb-4 text-2xl font-semibold">Gallery</h1>
-        <p className="text-sm text-gray-600">No image and caption to display.</p>
+        <p className="text-sm text-gray-600">No images found.</p>
       </main>
     );
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center p-8">
-      <div className="mb-6 flex w-full max-w-4xl items-center justify-between">
+      <div className="flex w-full max-w-4xl items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">Gallery</h1>
         <button
           type="button"
@@ -143,16 +101,19 @@ export default function GalleryPage() {
           Log out
         </button>
       </div>
-      <div className="w-full max-w-4xl">
-        <div className="rounded-lg border border-gray-200 bg-white p-4">
-          <img
-            src={image.url}
-            alt=""
-            className="mb-4 h-64 w-full rounded-md object-cover"
-          />
-          <p className="mb-3 text-sm text-gray-900">{caption.content}</p>
-          <CaptionVoteControls captionId={caption.id} />
-        </div>
+      <div className="grid w-full max-w-4xl grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4">
+        {images.map((img) => (
+          <div
+            key={img.id}
+            className="rounded-lg border border-gray-200 bg-white p-2"
+          >
+            <img
+              src={img.url}
+              alt=""
+              className="h-40 w-full rounded-md object-cover"
+            />
+          </div>
+        ))}
       </div>
     </main>
   );
