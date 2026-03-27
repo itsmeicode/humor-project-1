@@ -528,19 +528,16 @@ export default function GalleryPage() {
                 const step = 5;
                 const windowSize = 15;
 
-                // Under 15 votes: show 5/10/15.
-                // After that: keep the recently completed segment visible by sliding a 15-vote window
-                // that starts 5 votes before the last reward (e.g. at 15 => 10..25).
                 const lastReward = Math.floor(current / step) * step;
                 const start = current < windowSize ? 0 : Math.max(0, lastReward - step);
                 const end = start + windowSize;
                 const pct = ((current - start) / (end - start)) * 100;
 
                 const showLeftLabel = start !== 0;
-                const l0 = start; // left edge
+                const l0 = start;
                 const l1 = start + 5;
                 const l2 = start + 10;
-                const l3 = start + 15; // right edge
+                const l3 = start + 15;
                 return (
                   <div className="relative">
                     <div className="relative h-2 w-full overflow-hidden rounded-full bg-gray-100">

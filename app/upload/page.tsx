@@ -48,9 +48,7 @@ export default function UploadPage() {
         ...existing,
       ];
       window.localStorage.setItem(key, JSON.stringify(updated));
-    } catch {
-      // ignore localStorage failures
-    }
+    } catch {}
   };
 
   const extractCaptionStrings = (pipeline: PipelineResult): string[] => {
@@ -98,9 +96,7 @@ export default function UploadPage() {
       const next = [entry, ...prev].slice(0, 20);
       try {
         window.localStorage.setItem(LS_UPLOAD_HISTORY_KEY, JSON.stringify(next));
-      } catch {
-        // ignore localStorage failures
-      }
+      } catch {}
       return next;
     });
   };

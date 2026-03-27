@@ -88,8 +88,8 @@ export default function CollectionPage() {
     if (!selectedJoke || !selectedImage) return false;
     return matches.some(
       (m) =>
-        m.joke.captionId === selectedJoke.captionId &&
-        m.image.imageId === selectedImage.imageId
+        m.joke?.captionId === selectedJoke.captionId &&
+        m.image?.imageId === selectedImage.imageId
     );
   }, [matches, selectedJoke, selectedImage]);
 
@@ -116,6 +116,9 @@ export default function CollectionPage() {
     const updated = [next, ...matches];
     setMatches(updated);
     writeJson(LS_KEYS.matches, updated);
+    setSelectedJokeId('');
+    setSelectedImageId('');
+    setError(null);
   };
 
   if (!authChecked) {
