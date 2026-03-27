@@ -87,13 +87,12 @@ export default function UploadPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-8">
-      <div className="mb-6 flex w-full max-w-4xl items-center justify-between">
-        <h1 className="text-3xl font-bold">Upload an image</h1>
+      <div className="mb-10 flex w-full max-w-4xl items-center justify-between">
+        <a href="/gallery" className="text-3xl font-bold">
+          Caption Blind Box
+        </a>
         <div className="flex items-center gap-4">
           <nav className="flex items-center gap-4 text-sm text-gray-700">
-            <a href="/gallery" className="hover:text-gray-900 hover:underline">
-              Home
-            </a>
             <a
               href="/collection"
               className="hover:text-gray-900 hover:underline"
@@ -101,7 +100,7 @@ export default function UploadPage() {
               My collection
             </a>
             <a href="/gallery" className="hover:text-gray-900 hover:underline">
-              Rate captions
+              Rate
             </a>
           </nav>
           <button
@@ -140,7 +139,7 @@ export default function UploadPage() {
           <button
             type="submit"
             disabled={!file || isSubmitting}
-            className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white disabled:bg-gray-400"
+            className="self-start rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white disabled:bg-gray-400"
           >
             {isSubmitting ? 'Uploading & generating captions…' : 'Upload and caption'}
           </button>
@@ -157,7 +156,7 @@ export default function UploadPage() {
               <img
                 src={result.cdnUrl}
                 alt="Uploaded"
-                className="mb-4 h-80 w-full rounded-xl object-cover"
+                className="mb-4 max-h-[70vh] w-full rounded-xl bg-gray-50 object-contain"
               />
             )}
             <p className="mb-2 text-sm text-gray-600">

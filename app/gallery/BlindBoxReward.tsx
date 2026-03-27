@@ -68,7 +68,7 @@ export function BlindBoxReward({
               <img
                 src={reveal.url}
                 alt="Reward"
-                className="mt-3 h-72 w-full rounded-xl object-cover"
+                className="mt-3 max-h-[60vh] w-full rounded-xl bg-gray-50 object-contain"
               />
             ) : (
               <p className="mt-2 text-sm text-red-700">Missing reward option.</p>

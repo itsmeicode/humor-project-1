@@ -115,18 +115,17 @@ export default function CollectionPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-8">
-      <div className="mb-6 flex w-full max-w-4xl items-center justify-between">
-        <h1 className="text-3xl font-bold">My Collection</h1>
+      <div className="mb-10 flex w-full max-w-4xl items-center justify-between">
+        <a href="/gallery" className="text-3xl font-bold">
+          Caption Blind Box
+        </a>
         <div className="flex items-center gap-4">
           <nav className="flex items-center gap-4 text-sm text-gray-700">
-            <a href="/gallery" className="hover:text-gray-900 hover:underline">
-              Home
-            </a>
             <a href="/upload" className="hover:text-gray-900 hover:underline">
               Upload image
             </a>
             <a href="/gallery" className="hover:text-gray-900 hover:underline">
-              Rate captions
+              Rate
             </a>
           </nav>
           <button
@@ -202,7 +201,7 @@ export default function CollectionPage() {
               <img
                 src={selectedImage.url}
                 alt="Selected"
-                className="mt-3 h-64 w-full rounded-xl object-cover"
+                className="mt-3 max-h-[50vh] w-full rounded-xl bg-gray-50 object-contain"
               />
             )}
           </div>
@@ -234,7 +233,7 @@ export default function CollectionPage() {
                   <img
                     src={m.image.url}
                     alt=""
-                    className="mb-3 h-48 w-full rounded-lg object-cover"
+                    className="mb-3 max-h-[40vh] w-full rounded-lg bg-gray-50 object-contain"
                   />
                   <p className="text-sm font-semibold text-gray-900">
                     Score: {m.score}/100

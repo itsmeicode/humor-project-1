@@ -431,13 +431,12 @@ export default function GalleryPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-8">
-      <div className="mb-6 flex w-full max-w-4xl items-center justify-between">
-        <h1 className="text-3xl font-bold">Caption Blind Box</h1>
+      <div className="mb-10 flex w-full max-w-4xl items-center justify-between">
+        <a href="/gallery" className="text-3xl font-bold">
+          Caption Blind Box
+        </a>
         <div className="flex items-center gap-4">
           <nav className="flex items-center gap-4 text-sm text-gray-700">
-            <a href="/gallery" className="hover:text-gray-900 hover:underline">
-              Home
-            </a>
             <a
               href="/collection"
               className="hover:text-gray-900 hover:underline"
@@ -459,7 +458,7 @@ export default function GalleryPage() {
       </div>
       <div className="w-full max-w-2xl">
         {!showBlindBox && (
-          <div className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+          <div className="mb-6 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
             <div className="mb-2 flex items-center justify-between">
               <p className="text-sm font-medium text-gray-900">
                 Next blind box
@@ -500,7 +499,7 @@ export default function GalleryPage() {
             <img
               src={image.url}
               alt=""
-              className="mb-6 h-80 w-full rounded-xl object-cover"
+              className="mb-6 max-h-[70vh] w-full rounded-xl bg-gray-50 object-contain"
             />
             <p className="mb-4 text-center text-lg font-semibold text-gray-900">
               {caption.content}
