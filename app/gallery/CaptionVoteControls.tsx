@@ -47,7 +47,6 @@ export function CaptionVoteControls({
         voteValue,
         userId,
       });
-      const now = new Date().toISOString();
 
       const { error: insertError } = await supabase
         .from('caption_votes')
@@ -55,8 +54,8 @@ export function CaptionVoteControls({
           caption_id: captionId,
           vote_value: voteValue,
           profile_id: userId,
-          created_datetime_utc: now,
-          modified_datetime_utc: now,
+          created_by_user_id: userId,
+          modified_by_user_id: userId,
         });
 
       if (insertError) {
