@@ -1,11 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { getBrowserSupabaseClient } from '@/lib/supabaseBrowser';
 
 export default function Home() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const supabase = getBrowserSupabaseClient();
+    const check = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        router.replace('/gallery');
+      }
+    };
+    void check();
+  }, [router]);
 
   const handleSignIn = async () => {
     setError(null);
