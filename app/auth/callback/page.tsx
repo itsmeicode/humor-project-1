@@ -11,8 +11,6 @@ export default function AuthCallbackPage() {
   useEffect(() => {
     const supabase = getBrowserSupabaseClient();
 
-    // When this page loads after OAuth, Supabase JS will parse the URL and
-    // persist the session. We then check for a session and route accordingly.
     supabase.auth
       .getSession()
       .then(({ data, error: sessionError }) => {
