@@ -162,7 +162,7 @@ export default function Home() {
               type="button"
               onClick={handleSignIn}
               disabled={isLoading}
-              className="rounded-md bg-gray-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-60"
+              className="lobby-cta rounded-md px-5 py-2.5 text-sm font-medium disabled:opacity-60"
             >
               {isLoading ? 'Entering…' : 'Enter the Blind Box Arcade'}
             </button>

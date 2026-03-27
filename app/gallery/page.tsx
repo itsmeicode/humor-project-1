@@ -545,7 +545,7 @@ export default function GalleryPage() {
                   <div className="relative">
                     <div className="relative h-2 w-full overflow-hidden rounded-full bg-gray-100">
                       <div
-                        className="h-full bg-blue-600"
+                        className="reward-progress-fill h-full"
                         style={{
                           width: `${Math.max(0, Math.min(100, pct))}%`,
                         }}

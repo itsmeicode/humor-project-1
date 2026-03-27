@@ -46,13 +46,13 @@ export function ThemeToggle() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 rounded-xl border border-gray-300 bg-white/90 p-1 shadow-md backdrop-blur">
+    <div className="theme-toggle-shell fixed bottom-4 right-4 z-50 rounded-xl border border-gray-300 bg-white/90 p-1 shadow-md backdrop-blur">
       <div className="flex items-center gap-1 text-xs">
         <button
           type="button"
           onClick={() => updateMode('light')}
-          className={`rounded-md px-2 py-1 ${
-            mode === 'light' ? 'bg-gray-900 text-white' : 'text-gray-800'
+          className={`mode-toggle-btn rounded-md px-2 py-1 ${
+            mode === 'light' ? 'mode-toggle-btn-active' : 'text-gray-800'
           }`}
         >
           Light
@@ -60,8 +60,8 @@ export function ThemeToggle() {
         <button
           type="button"
           onClick={() => updateMode('dark')}
-          className={`rounded-md px-2 py-1 ${
-            mode === 'dark' ? 'bg-gray-900 text-white' : 'text-gray-800'
+          className={`mode-toggle-btn rounded-md px-2 py-1 ${
+            mode === 'dark' ? 'mode-toggle-btn-active' : 'text-gray-800'
           }`}
         >
           Dark
@@ -69,8 +69,8 @@ export function ThemeToggle() {
         <button
           type="button"
           onClick={() => updateMode('system')}
-          className={`rounded-md px-2 py-1 ${
-            mode === 'system' ? 'bg-gray-900 text-white' : 'text-gray-800'
+          className={`mode-toggle-btn rounded-md px-2 py-1 ${
+            mode === 'system' ? 'mode-toggle-btn-active' : 'text-gray-800'
           }`}
         >
           System
