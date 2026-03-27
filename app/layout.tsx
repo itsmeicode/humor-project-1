@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mei's Humor Project",
-  description: "Humor Project",
+  title: "Caption Blind Box",
+  description: "Caption Blind Box",
 };
 
 export default function RootLayout({

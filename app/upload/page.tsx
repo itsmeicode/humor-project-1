@@ -87,21 +87,23 @@ export default function UploadPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-8">
-      <div className="mb-6 flex w-full max-w-2xl items-center justify-between">
+      <div className="mb-6 flex w-full max-w-4xl items-center justify-between">
         <h1 className="text-3xl font-bold">Upload an image</h1>
-        <div className="flex items-center gap-3">
-          <a
-            href="/collection"
-            className="rounded-md border border-gray-300 px-3 py-1 text-sm text-gray-800 hover:bg-gray-50"
-          >
-            My collection
-          </a>
-          <a
-            href="/gallery"
-            className="rounded-md border border-gray-300 px-3 py-1 text-sm text-gray-800 hover:bg-gray-50"
-          >
-            Rate captions
-          </a>
+        <div className="flex items-center gap-4">
+          <nav className="flex items-center gap-4 text-sm text-gray-700">
+            <a href="/gallery" className="hover:text-gray-900 hover:underline">
+              Home
+            </a>
+            <a
+              href="/collection"
+              className="hover:text-gray-900 hover:underline"
+            >
+              My collection
+            </a>
+            <a href="/gallery" className="hover:text-gray-900 hover:underline">
+              Rate captions
+            </a>
+          </nav>
           <button
             type="button"
             onClick={async () => {
