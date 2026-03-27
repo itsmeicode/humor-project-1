@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getBrowserSupabaseClient } from '@/lib/supabaseBrowser';
 import {
@@ -22,6 +22,7 @@ const LS_UPLOAD_HISTORY_KEY = 'blindBoxUploadHistory';
 
 export default function UploadPage() {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
@@ -158,6 +159,11 @@ export default function UploadPage() {
       setResult(pipelineResult);
       addUploadedImageToCollection(pipelineResult);
       appendUploadHistory(pipelineResult);
+      setFile(null);
+      setFileError(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Upload failed.');
     } finally {
@@ -221,6 +227,7 @@ export default function UploadPage() {
               type="file"
               accept={SUPPORTED_IMAGE_TYPES.join(',')}
               onChange={onFileChange}
+              ref={fileInputRef}
               className="block w-full text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-gray-800"
             />
             {fileError && (

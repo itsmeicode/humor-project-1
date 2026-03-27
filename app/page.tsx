@@ -15,6 +15,20 @@ export default function Home() {
     matches: number;
   } | null>(null);
 
+  const resetLocalProgress = () => {
+    if (typeof window === 'undefined') return;
+    const keys = [
+      'blindBoxVoteCount',
+      'blindBoxUnlockedJokes',
+      'blindBoxUnlockedImages',
+      'blindBoxMatches',
+      'blindBoxUploadHistory',
+      'arrowVoteTipDismissed',
+    ];
+    for (const k of keys) window.localStorage.removeItem(k);
+    setStats({ totalVotes: 0, jokes: 0, images: 0, matches: 0 });
+  };
+
   useEffect(() => {
     const supabase = getBrowserSupabaseClient();
     const check = async () => {
@@ -111,26 +125,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-8">
-            <p className="mb-3 text-sm font-semibold text-gray-900">
-              Pick a box (teaser)
-            </p>
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-              {['Pick me!', 'Pick me!', 'Pick me!', 'Pick me!'].map((label, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-center rounded-2xl border border-gray-200 bg-gray-50 px-4 py-10 text-sm font-semibold text-gray-900 transition-all hover:-translate-y-0.5 hover:bg-gray-100 hover:shadow-md"
-                >
-                  {label}
-                </div>
-              ))}
-            </div>
-          </div>
-
           <div className="mt-8 flex flex-col items-center gap-3">
             {stats ? (
-              <p className="text-sm text-gray-700">
-                You’ve opened{' '}
+              <>
+                <p className="text-sm text-gray-700">
+                  On this device, you’ve opened{' '}
                 <span className="font-semibold text-gray-900">
                   {Math.floor(Math.max(0, stats.totalVotes) / 5)}
                 </span>{' '}
@@ -143,7 +142,15 @@ export default function Home() {
                   {stats.matches}
                 </span>{' '}
                 matches
-              </p>
+                </p>
+                <button
+                  type="button"
+                  onClick={resetLocalProgress}
+                  className="text-xs font-medium text-gray-600 underline hover:text-gray-900"
+                >
+                  Reset local progress
+                </button>
+              </>
             ) : (
               <p className="text-sm text-gray-700">
                 Start your streak: <span className="font-semibold">5 votes</span>{' '}
