@@ -19,6 +19,28 @@ export function CaptionVoteControls({
     setError(null);
   }, [captionId]);
 
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (isSubmitting) return;
+
+      const target = e.target as HTMLElement | null;
+      const tag = target?.tagName?.toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        void handleVote(-1);
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        void handleVote(1);
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isSubmitting, captionId]);
+
   const handleVote = async (voteValue: number) => {
     setError(null);
     setIsSubmitting(true);
@@ -42,11 +64,6 @@ export function CaptionVoteControls({
       }
 
       const userId = session.user.id;
-      console.log('Voting on caption:', {
-        captionId,
-        voteValue,
-        userId,
-      });
 
       const { error: insertError } = await supabase
         .from('caption_votes')

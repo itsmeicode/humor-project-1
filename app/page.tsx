@@ -8,6 +8,12 @@ export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [stats, setStats] = useState<{
+    totalVotes: number;
+    jokes: number;
+    images: number;
+    matches: number;
+  } | null>(null);
 
   useEffect(() => {
     const supabase = getBrowserSupabaseClient();
@@ -19,6 +25,31 @@ export default function Home() {
     };
     void check();
   }, [router]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const totalVotes = Number(
+        window.localStorage.getItem('blindBoxVoteCount') ?? '0'
+      );
+      const jokesRaw = window.localStorage.getItem('blindBoxUnlockedJokes');
+      const imagesRaw = window.localStorage.getItem('blindBoxUnlockedImages');
+      const matchesRaw = window.localStorage.getItem('blindBoxMatches');
+
+      const jokes = jokesRaw ? (JSON.parse(jokesRaw) as unknown[]) : [];
+      const images = imagesRaw ? (JSON.parse(imagesRaw) as unknown[]) : [];
+      const matches = matchesRaw ? (JSON.parse(matchesRaw) as unknown[]) : [];
+
+      setStats({
+        totalVotes: Number.isFinite(totalVotes) ? totalVotes : 0,
+        jokes: Array.isArray(jokes) ? jokes.length : 0,
+        images: Array.isArray(images) ? images.length : 0,
+        matches: Array.isArray(matches) ? matches.length : 0,
+      });
+    } catch {
+      setStats(null);
+    }
+  }, []);
 
   const handleSignIn = async () => {
     setError(null);
@@ -43,20 +74,98 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8">
-      <h1 className="mb-4 text-3xl font-bold">Caption Blind Box</h1>
-      <p className="mb-4 max-w-md text-center text-sm text-gray-600">
-        Sign in to rate captions. Every 5 votes unlocks a blind box reward!
-      </p>
-      {error && <p className="mb-4 text-sm text-red-600">{error}</p>}
-      <button
-        type="button"
-        onClick={handleSignIn}
-        disabled={isLoading}
-        className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-900 disabled:opacity-60"
-      >
-        {isLoading ? 'Redirecting…' : 'Sign in with Google'}
-      </button>
+    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-8">
+      <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-center py-10">
+        <div className="w-full rounded-3xl border border-gray-200 bg-white/80 p-8 shadow-sm backdrop-blur">
+          <div className="flex flex-col items-center text-center">
+            <p className="mb-2 text-xs font-semibold tracking-widest text-gray-500">
+              WELCOME TO THE ARCADE
+            </p>
+            <h1 className="text-4xl font-bold text-gray-900">
+              Caption Blind Box
+            </h1>
+            <p className="mt-3 max-w-2xl text-sm text-gray-600">
+              Open rewards by rating captions. Build your collection. Make cursed
+              combos.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+              <p className="text-sm font-semibold text-gray-900">1) Rate</p>
+              <p className="mt-1 text-sm text-gray-600">
+                Vote on captions to keep the streak going.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+              <p className="text-sm font-semibold text-gray-900">2) Unlock</p>
+              <p className="mt-1 text-sm text-gray-600">
+                Every 5 votes opens a blind box reward.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+              <p className="text-sm font-semibold text-gray-900">3) Match</p>
+              <p className="mt-1 text-sm text-gray-600">
+                Combine images + jokes into scored matches.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <p className="mb-3 text-sm font-semibold text-gray-900">
+              Pick a box (teaser)
+            </p>
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+              {['Pick me!', 'Pick me!', 'Pick me!', 'Pick me!'].map((label, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-center rounded-2xl border border-gray-200 bg-gray-50 px-4 py-10 text-sm font-semibold text-gray-900 transition-all hover:-translate-y-0.5 hover:bg-gray-100 hover:shadow-md"
+                >
+                  {label}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-col items-center gap-3">
+            {stats ? (
+              <p className="text-sm text-gray-700">
+                You’ve opened{' '}
+                <span className="font-semibold text-gray-900">
+                  {Math.floor(Math.max(0, stats.totalVotes) / 5)}
+                </span>{' '}
+                boxes •{' '}
+                <span className="font-semibold text-gray-900">{stats.jokes}</span>{' '}
+                jokes •{' '}
+                <span className="font-semibold text-gray-900">{stats.images}</span>{' '}
+                images •{' '}
+                <span className="font-semibold text-gray-900">
+                  {stats.matches}
+                </span>{' '}
+                matches
+              </p>
+            ) : (
+              <p className="text-sm text-gray-700">
+                Start your streak: <span className="font-semibold">5 votes</span>{' '}
+                = <span className="font-semibold">1 blind box</span>.
+              </p>
+            )}
+
+            {error && <p className="text-sm text-red-600">{error}</p>}
+            <button
+              type="button"
+              onClick={handleSignIn}
+              disabled={isLoading}
+              className="rounded-md bg-gray-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-60"
+            >
+              {isLoading ? 'Entering…' : 'Enter the Blind Box Arcade'}
+            </button>
+            <p className="text-xs text-gray-500">
+              Sign in with Google to save your session.
+            </p>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

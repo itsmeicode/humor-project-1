@@ -187,7 +187,7 @@ export default function CollectionPage() {
             <h2 className="mb-3 text-lg font-semibold">Unlocked Images</h2>
             {images.length === 0 ? (
               <p className="text-sm text-gray-600">
-                No images yet. Vote more to unlock images.
+                No images yet. Vote more or upload an image to unlock images.
               </p>
             ) : (
               <select

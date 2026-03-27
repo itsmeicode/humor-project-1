@@ -43,6 +43,7 @@ export default function GalleryPage() {
   const [captionPool, setCaptionPool] = useState<Caption[]>([]);
   const [blindBoxVoteCount, setBlindBoxVoteCount] = useState(0);
   const [showBlindBox, setShowBlindBox] = useState(false);
+  const [showArrowTip, setShowArrowTip] = useState(false);
   const [rewardType, setRewardType] = useState<RewardType>('joke');
   const [rewardOptions, setRewardOptions] = useState<RewardOption[]>([]);
   const [rewardError, setRewardError] = useState<string | null>(null);
@@ -68,6 +69,12 @@ export default function GalleryPage() {
         }
 
         setAuthChecked(true);
+
+        if (typeof window !== 'undefined') {
+          const tipKey = 'arrowVoteTipDismissed';
+          const dismissed = window.localStorage.getItem(tipKey) === '1';
+          if (!dismissed) setShowArrowTip(true);
+        }
 
         const {
           data: existingVotes,
@@ -486,6 +493,31 @@ export default function GalleryPage() {
             <p className="mb-4 text-center text-lg font-semibold text-gray-900">
               {caption.content}
             </p>
+            {showArrowTip && (
+              <div className="mb-4 flex w-full items-start justify-between gap-4 rounded-xl border border-gray-200 bg-gray-50 p-4">
+                <div>
+                  <p className="text-sm font-semibold text-gray-900">
+                    Tip: Use your keyboard
+                  </p>
+                  <p className="mt-1 text-sm text-gray-700">
+                    Press <span className="font-semibold">←</span> to downvote and{' '}
+                    <span className="font-semibold">→</span> to upvote.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowArrowTip(false);
+                    if (typeof window !== 'undefined') {
+                      window.localStorage.setItem('arrowVoteTipDismissed', '1');
+                    }
+                  }}
+                  className="rounded-md border border-gray-300 px-3 py-1 text-sm text-gray-800 hover:bg-white"
+                >
+                  Got it
+                </button>
+              </div>
+            )}
             <div className="mb-5 w-full">
               <div className="mb-1 flex items-center justify-between text-xs text-gray-600">
                 <span>Total votes: {blindBoxVoteCount}</span>
