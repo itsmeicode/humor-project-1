@@ -16,6 +16,8 @@ export type ImageReward = {
 
 export type RewardOption = JokeReward | ImageReward;
 
+const BOX_LABELS = ['Pick me!', 'Pick me!', 'Pick me!', 'Pick me!'] as const;
+
 type BlindBoxRewardProps = {
   rewardType: RewardType;
   options: RewardOption[];
@@ -36,10 +38,10 @@ export function BlindBoxReward({
   return (
     <div className="flex w-full flex-col items-center rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
       <h2 className="mb-1 text-xl font-semibold text-gray-900">
-        Blind box unlocked
+        Blind Box Unlocked!
       </h2>
       <p className="mb-6 text-center text-sm text-gray-600">
-        Pick a mystery box to reveal your {rewardType === 'joke' ? 'joke' : 'image'}.
+        Pick a blind box to reveal your {rewardType === 'joke' ? 'joke' : 'image'}.
       </p>
 
       {picked === null ? (
@@ -52,9 +54,9 @@ export function BlindBoxReward({
               type="button"
               disabled={disabled}
               onClick={() => setPicked(i)}
-              className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-10 text-sm font-medium text-gray-900 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-10 text-sm font-medium text-gray-900 transition-all hover:-translate-y-0.5 hover:bg-gray-100 hover:shadow-md active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none"
             >
-              Mystery box
+              {BOX_LABELS[i] ?? 'Blind Box'}
             </button>
           )})}
         </div>

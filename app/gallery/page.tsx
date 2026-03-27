@@ -493,11 +493,12 @@ export default function GalleryPage() {
               </div>
               {(() => {
                 const current = Math.max(0, blindBoxVoteCount);
-                const base = Math.floor(current / 5) * 5;
-                const a = base + 5;
-                const b = base + 10;
-                const c = base + 15;
-                const pct = ((current - base) / 15) * 100;
+                const cycle = 15;
+                const inCycle = current % cycle;
+                const a = 5;
+                const b = 10;
+                const c = 15;
+                const pct = (inCycle / cycle) * 100;
                 return (
                   <div className="relative">
                     <div className="relative h-2 w-full overflow-hidden rounded-full bg-gray-100">
