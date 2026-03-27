@@ -7,37 +7,6 @@ Caption Blind Box is a caption rating app with a “blind box” reward loop:
 - Collect unlocked jokes/images and create scored “matches”
 - Upload your own image to generate captions, save it to your collection, and keep an upload history
 
-## Getting Started
-
-### Requirements
-
-- Node.js + npm
-- Supabase project credentials (public anon key + URL)
-
-### Environment variables
-
-Create `.env.local` with:
-
-```bash
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-```
-
-### Run locally
-
-```bash
-npm install
-npm run dev
-```
-
-Open `http://localhost:3000`.
-
-### Build
-
-```bash
-npm run build
-```
-
 ## App routes
 
 - `/` — Sign-in lobby (Google OAuth)
@@ -94,11 +63,33 @@ After a successful upload:
 - The uploaded image is added to `blindBoxUnlockedImages`
 - The upload (image + generated captions) is appended to `blindBoxUploadHistory`
 
-## Deployment notes (Vercel)
+## Getting Started
 
-- Add the same env vars (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`) in your Vercel project.
-- Ensure the site is **publicly accessible** (disable deployment protection) to avoid rubric penalties.
+### Requirements
 
-## Credits
+- Node.js + npm
+- Supabase project credentials (public anon key + URL)
 
-Built with Next.js + Supabase.
+### Environment variables
+
+Create `.env.local` with:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+```
+
+### Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+### Build
+
+```bash
+npm run build
+```
